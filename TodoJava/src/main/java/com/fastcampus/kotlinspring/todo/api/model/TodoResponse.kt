@@ -13,9 +13,8 @@ data class TodoResponse(
     val updatedAt : LocalDateTime?,
 ) {
     companion object{
-        @JvmStatic
         fun of(todo: Todo) : TodoResponse{
-            Assert.notNull(todo, "Todo is null")
+            checkNotNull(todo.id) { "todo.id must be not null" }
 
             return TodoResponse(
                 id =  todo.id,
