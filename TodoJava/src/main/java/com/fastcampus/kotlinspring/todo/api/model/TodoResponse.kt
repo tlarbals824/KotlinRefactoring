@@ -13,11 +13,11 @@ data class TodoResponse(
     val updatedAt : LocalDateTime?,
 ) {
     companion object{
-        fun of(todo: Todo) : TodoResponse{
-            checkNotNull(todo.id) { "todo.id must be not null" }
+        fun of(todo: Todo?) : TodoResponse{
+            checkNotNull(todo) { "todo.id must be not null" }
 
             return TodoResponse(
-                id =  todo.id,
+                id = todo.id!!,
                 title = todo.title,
                 description = todo.description,
                 done = todo.done,
