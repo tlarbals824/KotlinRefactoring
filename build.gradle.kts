@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("jvm") version "1.9.10"
     kotlin("plugin.spring") version "1.9.10"
+    kotlin("plugin.jpa") version "1.9.10"
 }
 
 allprojects {
@@ -29,6 +30,9 @@ allprojects {
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
+        // web
+        implementation("org.springframework.boot:spring-boot-starter-web")
+
         // lombok
         implementation("org.projectlombok:lombok")
         annotationProcessor("org.projectlombok:lombok")
