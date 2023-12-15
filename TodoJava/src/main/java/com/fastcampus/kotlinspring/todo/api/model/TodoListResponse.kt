@@ -5,17 +5,11 @@ import com.fastcampus.kotlinspring.todo.domain.Todo
 data class TodoListResponse(
     val items: List<TodoResponse>,
 ) {
-    fun size():Int = items.size
+    fun size(): Int = items.size
 
-    fun get(index: Int):TodoResponse = items.get(index)
+    fun get(index: Int): TodoResponse = items[index]
 
-    companion object{
-        @JvmStatic
-        fun of(todoList: List<Todo>):TodoListResponse{
-            val items = todoList.stream()
-                .map(TodoResponse::of)
-                .toList()
-            return TodoListResponse(items)
-        }
+    companion object {
+        fun of(todoList: List<Todo>): TodoListResponse = TodoListResponse(todoList.map { TodoResponse.of(it) })
     }
 }
