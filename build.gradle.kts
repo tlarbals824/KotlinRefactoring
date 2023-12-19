@@ -1,15 +1,17 @@
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.2.0"
+    id("org.springframework.boot") version "3.1.5"
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("jvm") version "1.9.21"
     kotlin("plugin.spring") version "1.9.21"
     kotlin("plugin.jpa") version "1.9.21"
     kotlin("plugin.lombok") version "1.9.21"
     id("io.freefair.lombok") version "8.1.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
+    kotlin("kapt") version "1.9.21"
 }
-
 
 allprojects {
     apply(plugin = "org.springframework.boot")
@@ -21,6 +23,7 @@ allprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
     apply(plugin = "org.jetbrains.kotlin.plugin.lombok")
     apply(plugin = "io.freefair.lombok")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     group = "com.sim"
     version = "0.0.1-SNAPSHOT"
@@ -46,9 +49,19 @@ allprojects {
         // jpa
         implementation("org.springframework.boot:spring-boot-starter-data-jpa")
         // h2
-        runtimeOnly("com.h2database:h2")
+        testImplementation("com.h2database:h2")
 
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+        // ninja-squad:springmockk
+        testImplementation("com.ninja-squad:springmockk:3.1.1")
+
+        // mysql
+        runtimeOnly("com.mysql:mysql-connector-j")
+
+        // querydsl
+        implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+        kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     }
 
     tasks.withType<KotlinCompile> {
