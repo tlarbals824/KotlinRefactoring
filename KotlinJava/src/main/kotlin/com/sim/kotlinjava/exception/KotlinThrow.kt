@@ -6,7 +6,7 @@ import kotlin.jvm.Throws
 class KotlinThrow {
 
     @Throws(IOException::class)
-    fun throwIOException(){
+    fun throwIOException() {
         throw IOException("체크드 익셉션 IOException 발생")
     }
 }

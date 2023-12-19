@@ -2,18 +2,18 @@ package com.sim.kotlinjava.jvmstatic
 
 class HelloClass {
 
-    companion object{
+    companion object {
         @JvmStatic
         fun hello() = "hello!"
     }
 }
 
-object HiObject{
+object HiObject {
     @JvmStatic
     fun hi() = "hi!"
 }
 
-fun main(){
+fun main() {
     val hello = HelloClass.hello()
 
     val hi = HiObject.hi()

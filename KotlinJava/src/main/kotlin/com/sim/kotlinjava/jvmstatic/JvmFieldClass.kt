@@ -1,7 +1,7 @@
 package com.sim.kotlinjava.jvmstatic
 
 class JvmFieldClass {
-    companion object{
+    companion object {
         @JvmField
         var id = 1234
 
@@ -9,7 +9,7 @@ class JvmFieldClass {
     }
 }
 
-object JvmFieldObject{
+object JvmFieldObject {
     @JvmField
     val name = "tony"
 

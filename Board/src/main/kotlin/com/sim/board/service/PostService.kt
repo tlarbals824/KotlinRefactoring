@@ -23,9 +23,9 @@ class PostService(
     }
 
     @Transactional
-    fun updatePost(id: Long, postUpdateRequestDto: PostUpdateRequestDto) : Long {
+    fun updatePost(id: Long, postUpdateRequestDto: PostUpdateRequestDto): Long {
         val post: Post = postRepository.findByIdOrNull(id) ?: throw PostNotFoundException()
-        if(post.createdBy != postUpdateRequestDto.updatedBy) throw PostNotUpdatableException()
+        if (post.createdBy != postUpdateRequestDto.updatedBy) throw PostNotUpdatableException()
         post.update(postUpdateRequestDto.title, postUpdateRequestDto.content, postUpdateRequestDto.updatedBy)
         return post.id
     }
@@ -33,7 +33,7 @@ class PostService(
     @Transactional
     fun deletePost(id: Long, deletedBy: String): Long {
         val post: Post = postRepository.findByIdOrNull(id) ?: throw PostNotFoundException()
-        if(post.createdBy != deletedBy) throw PostNotDeletableException()
+        if (post.createdBy != deletedBy) throw PostNotDeletableException()
         postRepository.delete(post)
         return post.id
     }

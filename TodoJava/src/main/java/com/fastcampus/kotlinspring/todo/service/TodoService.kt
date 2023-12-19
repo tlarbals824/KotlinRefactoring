@@ -30,7 +30,7 @@ class TodoService(
             title = request.title,
             description = request.description,
             done = request.done,
-            createdAt = LocalDateTime.now(),
+            createdAt = LocalDateTime.now()
         )
 
         return todoRepository.save(todo)
@@ -47,5 +47,4 @@ class TodoService(
     }
 
     fun delete(id: Long) = todoRepository.deleteById(id)
-
 }

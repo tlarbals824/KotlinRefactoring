@@ -1,7 +1,6 @@
 package com.sim.kotlinjava.gettersetter
 
 fun main() {
-
     // 자바 스타일
     val person = Person()
     person.setName("심규민")

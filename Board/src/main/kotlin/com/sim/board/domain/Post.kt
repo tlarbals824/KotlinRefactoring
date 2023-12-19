@@ -7,7 +7,7 @@ import jakarta.persistence.Id
 
 @Entity
 class Post(
-    createBy : String,
+    createBy: String,
     title: String,
     content: String
 ) : BaseEntity(createBy) {

@@ -7,11 +7,11 @@ import java.time.LocalDateTime
 abstract class BaseEntity(
     createBy: String
 ) {
-    val createdBy : String = createBy
-    val createdAt : LocalDateTime = LocalDateTime.now()
-    var updatedBy : String? = null
+    val createdBy: String = createBy
+    val createdAt: LocalDateTime = LocalDateTime.now()
+    var updatedBy: String? = null
         protected set
-    var updatedAt  : LocalDateTime? = null
+    var updatedAt: LocalDateTime? = null
         protected set
 
     fun update(updatedBy: String) {

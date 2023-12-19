@@ -8,8 +8,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.BDDMockito.given
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.time.LocalDateTime
@@ -30,7 +28,7 @@ class TodoServiceTests {
             description = "테스트 상세",
             done = false,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
         )
     }
 
@@ -41,13 +39,12 @@ class TodoServiceTests {
 
     @Test
     fun `한개의 TODO를 반환해야한다`() {
-        //given
+        // given
         every { repository.findByIdOrNull(1) } returns stud
-        //when
+        // when
         val actual = service.findById(1L)
-        //then
+        // then
         assertThat(actual).isNotNull
         assertThat(actual).isEqualTo(stud)
     }
-
 }

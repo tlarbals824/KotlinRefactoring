@@ -18,7 +18,7 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping("/posts")
 class PostController(
-    private val postService: PostService,
+    private val postService: PostService
 ) {
 
     @PostMapping
@@ -30,23 +30,22 @@ class PostController(
         @RequestBody request: PostUpdateRequest
     ): Long = postService.updatePost(id, request.toDto())
 
-
     @DeleteMapping("/{id}")
     fun deletePost(
         @PathVariable id: Long,
-        @RequestParam createdBy: String,
+        @RequestParam createdBy: String
     ) = postService.deletePost(id, createdBy)
 
     @GetMapping("/{id}")
     fun getPost(
-        @PathVariable id: Long,
+        @PathVariable id: Long
     ): PostDetailResponse {
         return PostDetailResponse(
             id = 1L,
             title = "title",
             content = "content",
             createdBy = "createdBy",
-            createdAt = LocalDateTime.now(),
+            createdAt = LocalDateTime.now()
         )
     }
 

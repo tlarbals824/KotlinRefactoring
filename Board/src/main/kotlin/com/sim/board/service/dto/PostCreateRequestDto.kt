@@ -8,7 +8,7 @@ data class PostCreateRequestDto(
     val createdBy: String
 ) {
 
-    fun toEntity()= Post(
+    fun toEntity() = Post(
         title = this.title,
         content = this.content,
         createBy = this.createdBy

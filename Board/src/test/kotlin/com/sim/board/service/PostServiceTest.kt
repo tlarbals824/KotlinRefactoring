@@ -18,7 +18,7 @@ import org.springframework.data.repository.findByIdOrNull
 @SpringBootTest
 class PostServiceTest(
     private val postSerive: PostService,
-    private val postRepository: PostRepository,
+    private val postRepository: PostRepository
 ) : BehaviorSpec({
     given("게시글 생성시") {
         `when`("게시글 요청이 정상적으로 들어오면") {
@@ -48,7 +48,8 @@ class PostServiceTest(
         )
         `when`("정상 수정시") {
             val updatedId: Long = postSerive.updatePost(
-                post.id, PostUpdateRequestDto(
+                post.id,
+                PostUpdateRequestDto(
                     title = "수정된 제목",
                     content = "수정된 내용",
                     updatedBy = "작성자"
@@ -67,7 +68,8 @@ class PostServiceTest(
             then("예외가 발생한다.") {
                 val exception = shouldThrow<PostNotFoundException> {
                     postSerive.updatePost(
-                        0L, PostUpdateRequestDto(
+                        0L,
+                        PostUpdateRequestDto(
                             title = "수정된 제목",
                             content = "수정된 내용",
                             updatedBy = "작성자"
@@ -81,7 +83,8 @@ class PostServiceTest(
             then("수정할 수 없는 게시물 입니다 예외가 발생한다.") {
                 shouldThrow<PostNotUpdatableException> {
                     postSerive.updatePost(
-                        post.id, PostUpdateRequestDto(
+                        post.id,
+                        PostUpdateRequestDto(
                             title = "수정된 제목",
                             content = "수정된 내용",
                             updatedBy = "수정자"
@@ -100,7 +103,7 @@ class PostServiceTest(
             )
         )
         `when`("정상 삭제시") {
-            val postId : Long = postSerive.deletePost(post.id, "작성자")
+            val postId: Long = postSerive.deletePost(post.id, "작성자")
             then("게시글이 정상적으로 삭제됨을 확인한다.") {
                 post.id shouldBe postId
                 val deleted = postRepository.findByIdOrNull(post.id)
@@ -108,7 +111,7 @@ class PostServiceTest(
             }
         }
         `when`("작성자가 동일하지 않으면") {
-            then("삭제할 수 없는 게시물 입니다 예외가 발생한다."){
+            then("삭제할 수 없는 게시물 입니다 예외가 발생한다.") {
                 shouldThrow<PostNotDeletableException> {
                     postSerive.deletePost(post.id, "수정자")
                 }

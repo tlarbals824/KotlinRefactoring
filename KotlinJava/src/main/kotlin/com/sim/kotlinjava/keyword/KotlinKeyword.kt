@@ -1,6 +1,6 @@
 package com.sim.kotlinjava.keyword
 
-enum class CountryCodeKotlin{
+enum class CountryCodeKotlin {
     kr, jp, us, `do`;
 }
 
