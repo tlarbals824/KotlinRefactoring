@@ -77,7 +77,7 @@ class PostServiceTest(
                     title = "제목10",
                     content = "내용10",
                     createBy = "작성자"
-                ),
+                )
             )
         )
     }
@@ -180,7 +180,7 @@ class PostServiceTest(
         }
     }
     given("게시글 상제조회시") {
-        val saved : Post = postRepository.save(
+        val saved: Post = postRepository.save(
             Post(
                 title = "제목",
                 content = "내용",

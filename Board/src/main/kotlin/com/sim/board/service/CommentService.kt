@@ -15,19 +15,19 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
-class CommentService (
+class CommentService(
     private val commentRepository: CommentRepository,
     private val postRepository: PostRepository
-){
+) {
 
     @Transactional
-    fun createComment(postId: Long, request: CommentCreateRequestDto): Long{
+    fun createComment(postId: Long, request: CommentCreateRequestDto): Long {
         val post = postRepository.findByIdOrNull(postId) ?: throw PostNotFoundException()
         return commentRepository.save(request.toEntity(post)).id
     }
 
     @Transactional
-    fun updateComment(postId: Long, commentId: Long, request: CommentUpdateRequestDto): Long{
+    fun updateComment(postId: Long, commentId: Long, request: CommentUpdateRequestDto): Long {
         val post = postRepository.findByIdOrNull(postId) ?: throw PostNotFoundException()
         val comment = commentRepository.findByIdOrNull(commentId) ?: throw CommentNotFoundException()
         if (comment.createdBy != request.updatedBy) throw CommentNotUpdatableException()
@@ -36,7 +36,7 @@ class CommentService (
     }
 
     @Transactional
-    fun deleteComment(postId: Long, commentId: Long, deletedBy: String){
+    fun deleteComment(postId: Long, commentId: Long, deletedBy: String) {
         val post = postRepository.findByIdOrNull(postId) ?: throw PostNotFoundException()
         val comment = commentRepository.findByIdOrNull(commentId) ?: throw CommentNotFoundException()
         if (comment.createdBy != deletedBy) throw CommentNotDeletableException()

@@ -34,7 +34,8 @@ class CommentServiceTest(
                 )
             ).id
             val commentId = commentService.createComment(
-                postId, CommentCreateRequestDto(
+                postId,
+                CommentCreateRequestDto(
                     content = "댓글 내용",
                     createdBy = "작성자"
                 )
@@ -52,7 +53,8 @@ class CommentServiceTest(
             then("게시글이 존재하지 않음 예외가 발생한다.") {
                 shouldThrow<PostNotFoundException> {
                     commentService.createComment(
-                        postId, CommentCreateRequestDto(
+                        postId,
+                        CommentCreateRequestDto(
                             content = "댓글 내용",
                             createdBy = "작성자"
                         )
@@ -78,7 +80,9 @@ class CommentServiceTest(
                 )
             )
             val updatedCommentId = commentService.updateComment(
-                post.id, comment.id, CommentUpdateRequestDto(
+                post.id,
+                comment.id,
+                CommentUpdateRequestDto(
                     content = "수정된 댓글 내용",
                     updatedBy = "작성자"
                 )
@@ -109,7 +113,9 @@ class CommentServiceTest(
             then("수정할 수 없는 댓글 예외가 발생한다.") {
                 shouldThrow<CommentNotUpdatableException> {
                     commentService.updateComment(
-                        post.id, commentId, CommentUpdateRequestDto(
+                        post.id,
+                        commentId,
+                        CommentUpdateRequestDto(
                             content = "수정된 댓글 내용",
                             updatedBy = "수정자"
                         )
@@ -142,7 +148,9 @@ class CommentServiceTest(
         )
         `when`("요청이 정상적으로 들어오면") {
             commentService.deleteComment(
-                post.id, comment1.id, "작성자1"
+                post.id,
+                comment1.id,
+                "작성자1"
             )
             then("정상 삭제됨을 확인한다.") {
                 val findComment = commentRepository.findByIdOrNull(comment1.id)
@@ -153,11 +161,12 @@ class CommentServiceTest(
             then("삭제할 수 없는 댓글 예외가 발생한다.") {
                 shouldThrow<CommentNotDeletableException> {
                     commentService.deleteComment(
-                        post.id, comment2.id, "삭제자"
+                        post.id,
+                        comment2.id,
+                        "삭제자"
                     )
                 }
             }
         }
     }
-
 })

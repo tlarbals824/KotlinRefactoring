@@ -4,7 +4,7 @@ import com.sim.board.controller.dto.PostSearchRequest
 
 data class PostSearchRequestDto(
     val title: String? = null,
-    val createdBy: String? = null,
+    val createdBy: String? = null
 )
 
 fun PostSearchRequest.toDto(): PostSearchRequestDto {

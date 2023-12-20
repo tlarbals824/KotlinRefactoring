@@ -15,14 +15,14 @@ class CommentController(
     fun createComment(
         @PathVariable postId: Long,
         @RequestBody request: CommentCreateRequest
-    ) : Long = commentService.createComment(postId, request.toDto())
+    ): Long = commentService.createComment(postId, request.toDto())
 
     @PutMapping("posts/{postId}/comments/{commentId}")
     fun updateComment(
         @PathVariable postId: Long,
         @PathVariable commentId: Long,
         @RequestBody request: CommentUpdateRequest
-    ) : Long = commentService.updateComment(postId, commentId, request.toDto())
+    ): Long = commentService.updateComment(postId, commentId, request.toDto())
 
     @DeleteMapping("posts/{postId}/comments/{commentId}")
     fun deleteComment(

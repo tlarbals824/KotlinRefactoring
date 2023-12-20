@@ -6,9 +6,10 @@ import jakarta.persistence.*
 class Comment(
     content: String,
     post: Post,
-    createdBy: String,
+    createdBy: String
 ) : BaseEntity(createdBy) {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L
 
     var content: String = content

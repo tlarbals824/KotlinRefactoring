@@ -8,7 +8,7 @@ data class CommentResponseDto(
     val id: Long,
     val content: String,
     val createdBy: String,
-    val createdAt: LocalDateTime,
+    val createdAt: LocalDateTime
 )
 
 fun CommentResponseDto.toResponse(): CommentResponse {
@@ -16,7 +16,7 @@ fun CommentResponseDto.toResponse(): CommentResponse {
         id = this.id,
         content = this.content,
         createdBy = this.createdBy,
-        createdAt = this.createdAt,
+        createdAt = this.createdAt
     )
 }
 
@@ -25,7 +25,7 @@ fun Comment.toCommentResponseDto(): CommentResponseDto {
         id = this.id,
         content = this.content,
         createdBy = this.createdBy,
-        createdAt = this.createdAt,
+        createdAt = this.createdAt
     )
 }
 

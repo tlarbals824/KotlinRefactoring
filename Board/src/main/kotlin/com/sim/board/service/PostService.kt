@@ -48,5 +48,4 @@ class PostService(
     fun findPageBy(pageRequest: Pageable, postSearchRequestDto: PostSearchRequestDto): Page<PostSummaryResponseDto> {
         return postRepository.findPageBy(pageRequest, postSearchRequestDto).toSummaryResponseDto()
     }
-
 }
