@@ -1,9 +1,6 @@
 package com.sim.board.domain
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 @Entity
 class Post(
@@ -18,6 +15,10 @@ class Post(
     var title: String = title
         private set
     var content: String = content
+        private set
+
+    @OneToMany(mappedBy = "post", orphanRemoval = true, cascade = [CascadeType.ALL])
+    var comments: MutableList<Comment> = mutableListOf()
         private set
 
     fun update(title: String, content: String, updatedBy: String) {
