@@ -8,7 +8,8 @@ data class PostDetailResponse(
     val title: String,
     val content: String,
     val createdBy: String,
-    val createdAt: LocalDateTime
+    val createdAt: LocalDateTime,
+    val comments: List<CommentResponse> = emptyList(),
 )
 
 fun PostDetailResponseDto.toResponse(): PostDetailResponse {
