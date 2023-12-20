@@ -1,9 +1,11 @@
 package com.sim.board.service
 
+import com.sim.board.domain.Comment
 import com.sim.board.domain.Post
 import com.sim.board.exception.PostNotDeletableException
 import com.sim.board.exception.PostNotFoundException
 import com.sim.board.exception.PostNotUpdatableException
+import com.sim.board.repository.CommentRepository
 import com.sim.board.repository.PostRepository
 import com.sim.board.service.dto.PostCreateRequestDto
 import com.sim.board.service.dto.PostSearchRequestDto
@@ -20,7 +22,8 @@ import org.springframework.data.repository.findByIdOrNull
 @SpringBootTest
 class PostServiceTest(
     private val postSerive: PostService,
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository,
+    private val commentRepository: CommentRepository
 ) : BehaviorSpec({
     beforeSpec {
         postRepository.saveAll(
@@ -177,7 +180,7 @@ class PostServiceTest(
         }
     }
     given("게시글 상제조회시") {
-        val saved = postRepository.save(
+        val saved : Post = postRepository.save(
             Post(
                 title = "제목",
                 content = "내용",
@@ -201,6 +204,34 @@ class PostServiceTest(
                 }
             }
         }
+        `when`("댓글 추가시") {
+            val comment1 = Comment(
+                content = "댓글 내용1",
+                post = saved,
+                createdBy = "작성자"
+            )
+            val comment2 = Comment(
+                content = "댓글 내용2",
+                post = saved,
+                createdBy = "작성자"
+            )
+            val comment3 = Comment(
+                content = "댓글 내용3",
+                post = saved,
+                createdBy = "작성자"
+            )
+
+            commentRepository.save(comment1)
+            commentRepository.save(comment2)
+            commentRepository.save(comment3)
+            then("댓글이 함께 조회됨을 확인한다.") {
+                val post = postSerive.getPost(saved.id)
+                post.comments.size shouldBe 3
+                post.comments[0].id shouldBe comment1.id
+                post.comments[1].id shouldBe comment2.id
+                post.comments[2].id shouldBe comment3.id
+            }
+        }
     }
     given("게시글 목록조회시") {
         `when`("정상 조회시") {
@@ -219,8 +250,8 @@ class PostServiceTest(
                 postPage.content.size shouldBe 1
             }
         }
-        `when`("작성자로 검색"){
-            then("작성자에 해당하는 게시글이 반환된다."){
+        `when`("작성자로 검색") {
+            then("작성자에 해당하는 게시글이 반환된다.") {
                 val postPage = postSerive.findPageBy(PageRequest.of(0, 5), PostSearchRequestDto(createdBy = "작성자"))
                 postPage.number shouldBe 0
                 postPage.size shouldBe 5

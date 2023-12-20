@@ -1,6 +1,7 @@
 package com.sim.board.controller.dto
 
 import com.sim.board.service.dto.PostDetailResponseDto
+import com.sim.board.service.dto.toResponse
 import java.time.LocalDateTime
 
 data class PostDetailResponse(
@@ -18,6 +19,7 @@ fun PostDetailResponseDto.toResponse(): PostDetailResponse {
         title = this.title,
         content = this.content,
         createdBy = this.createdBy,
-        createdAt = this.createdAt
+        createdAt = this.createdAt,
+        comments = this.comments.toResponse()
     )
 }
