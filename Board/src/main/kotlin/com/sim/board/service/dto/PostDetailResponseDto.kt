@@ -1,9 +1,9 @@
-package com.sim.board.controller.dto
+package com.sim.board.service.dto
 
-import com.sim.board.service.dto.PostDetailResponseDto
+import com.sim.board.domain.Post
 import java.time.LocalDateTime
 
-data class PostDetailResponse(
+data class PostDetailResponseDto(
     val id: Long,
     val title: String,
     val content: String,
@@ -11,8 +11,8 @@ data class PostDetailResponse(
     val createdAt: LocalDateTime
 )
 
-fun PostDetailResponseDto.toResponse(): PostDetailResponse {
-    return PostDetailResponse(
+fun Post.toDetailResponseDto(): PostDetailResponseDto {
+    return PostDetailResponseDto(
         id = this.id,
         title = this.title,
         content = this.content,

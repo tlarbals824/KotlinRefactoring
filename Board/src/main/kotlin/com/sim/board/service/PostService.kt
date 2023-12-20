@@ -5,8 +5,9 @@ import com.sim.board.exception.PostNotDeletableException
 import com.sim.board.exception.PostNotFoundException
 import com.sim.board.exception.PostNotUpdatableException
 import com.sim.board.repository.PostRepository
-import com.sim.board.service.dto.PostCreateRequestDto
-import com.sim.board.service.dto.PostUpdateRequestDto
+import com.sim.board.service.dto.*
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -37,4 +38,15 @@ class PostService(
         postRepository.delete(post)
         return post.id
     }
+
+    fun getPost(id: Long): PostDetailResponseDto {
+        val postDetailResponseDto =
+            postRepository.findByIdOrNull(id)?.toDetailResponseDto() ?: throw PostNotFoundException()
+        return postDetailResponseDto
+    }
+
+    fun findPageBy(pageRequest: Pageable, postSearchRequestDto: PostSearchRequestDto): Page<PostSummaryResponseDto> {
+        return postRepository.findPageBy(pageRequest, postSearchRequestDto).toSummaryResponseDto()
+    }
+
 }
