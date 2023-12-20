@@ -18,4 +18,8 @@ class Comment(
     var post: Post = post
         private set
 
+    fun update(content: String, updatedBy: String) {
+        this.content = content
+        this.update(updatedBy)
+    }
 }

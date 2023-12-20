@@ -14,8 +14,8 @@ Content-Type: application/json
 
 {
     "content": "댓글 내용 수정",
-    "updatedBy" : "댓글 수정자"
+    "updatedBy" : "댓글 작성자"
 }
 
 ### 댓글 삭제
-DELETE localhost:8080/posts/1/comments/1?deletedBy=삭제자
+DELETE localhost:8080/posts/1/comments/1?deletedBy=댓글 작성자
