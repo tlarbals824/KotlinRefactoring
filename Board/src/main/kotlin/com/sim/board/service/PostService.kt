@@ -19,6 +19,7 @@ class PostService(
 ) {
     @Transactional
     fun createPost(requestDto: PostCreateRequestDto): Long {
+        println(requestDto.tags)
         val post = postRepository.save(requestDto.toEntity())
         return post.id
     }
@@ -27,7 +28,7 @@ class PostService(
     fun updatePost(id: Long, postUpdateRequestDto: PostUpdateRequestDto): Long {
         val post: Post = postRepository.findByIdOrNull(id) ?: throw PostNotFoundException()
         if (post.createdBy != postUpdateRequestDto.updatedBy) throw PostNotUpdatableException()
-        post.update(postUpdateRequestDto.title, postUpdateRequestDto.content, postUpdateRequestDto.updatedBy)
+        post.update(postUpdateRequestDto.title, postUpdateRequestDto.content, postUpdateRequestDto.updatedBy, postUpdateRequestDto.tags)
         return post.id
     }
 

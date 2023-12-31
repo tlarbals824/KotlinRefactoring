@@ -7,6 +7,7 @@ import com.sim.board.exception.PostNotFoundException
 import com.sim.board.exception.PostNotUpdatableException
 import com.sim.board.repository.CommentRepository
 import com.sim.board.repository.PostRepository
+import com.sim.board.repository.TagRepository
 import com.sim.board.service.dto.PostCreateRequestDto
 import com.sim.board.service.dto.PostSearchRequestDto
 import com.sim.board.service.dto.PostUpdateRequestDto
@@ -23,7 +24,8 @@ import org.springframework.data.repository.findByIdOrNull
 class PostServiceTest(
     private val postSerive: PostService,
     private val postRepository: PostRepository,
-    private val commentRepository: CommentRepository
+    private val commentRepository: CommentRepository,
+    private val tagRepository: TagRepository
 ) : BehaviorSpec({
     beforeSpec {
         postRepository.saveAll(
@@ -31,52 +33,62 @@ class PostServiceTest(
                 Post(
                     title = "제목1",
                     content = "내용1",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 ),
                 Post(
                     title = "제목2",
                     content = "내용2",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 ),
                 Post(
                     title = "제목3",
                     content = "내용3",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 ),
                 Post(
                     title = "제목4",
                     content = "내용4",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 ),
                 Post(
                     title = "제목5",
                     content = "내용5",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 ),
                 Post(
                     title = "제목6",
                     content = "내용6",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 ),
                 Post(
                     title = "제목7",
                     content = "내용7",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 ),
                 Post(
                     title = "제목8",
                     content = "내용8",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 ),
                 Post(
                     title = "제목9",
                     content = "내용9",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 ),
                 Post(
                     title = "제목10",
                     content = "내용10",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 )
             )
         )
@@ -98,13 +110,30 @@ class PostServiceTest(
                 post?.createdBy shouldBe "작성자"
             }
         }
+        `when`("태그가 추가되면"){
+            val postId: Long = postSerive.createPost(
+                PostCreateRequestDto(
+                    title = "제목",
+                    content = "내용",
+                    createdBy = "작성자",
+                    tags = listOf("태그1", "태그2")
+                )
+            )
+            then("태그가 정상적으로 추가됨을 확인한다."){
+                val tags = tagRepository.findByPostId(postId)
+                tags.size shouldBe 2
+                tags[0].name shouldBe "태그1"
+                tags[1].name shouldBe "태그2"
+            }
+        }
     }
     given("게시글 수정시") {
         val post = postRepository.save(
             Post(
                 title = "제목",
                 content = "내용",
-                createBy = "작성자"
+                createBy = "작성자",
+                tags = listOf("태그1", "태그2")
             )
         )
         `when`("정상 수정시") {
@@ -154,13 +183,45 @@ class PostServiceTest(
                 }
             }
         }
+        `when`("태그가 수정됐을 때"){
+            val updatedId: Long = postSerive.updatePost(
+                post.id,
+                PostUpdateRequestDto(
+                    title = "수정된 제목",
+                    content = "수정된 내용",
+                    updatedBy = "작성자",
+                    tags = listOf("태그1", "태그2", "태그3")
+                )
+            )
+            then("태그가 정상적으로 수정됨을 확인한다."){
+                val tags = tagRepository.findByPostId(updatedId)
+                tags.size shouldBe 3
+                tags[0].name shouldBe "태그1"
+                tags[1].name shouldBe "태그2"
+                tags[2].name shouldBe "태그3"
+            }
+            then("태그가 순서만 변경 됐을 때 정상적으로 변경됨을 확인한다."){
+                val updatedId: Long = postSerive.updatePost(
+                    post.id,
+                    PostUpdateRequestDto(
+                        title = "수정된 제목",
+                        content = "수정된 내용",
+                        updatedBy = "작성자",
+                        tags = listOf("태그3", "태그2", "태그1")
+                    )
+                )
+                val tags = tagRepository.findByPostId(updatedId)
+                tags.size shouldBe 3
+            }
+        }
     }
     given("게시글 삭제시") {
         val post = postRepository.save(
             Post(
                 title = "제목",
                 content = "내용",
-                createBy = "작성자"
+                createBy = "작성자",
+                tags = listOf("태그1", "태그2")
             )
         )
         `when`("정상 삭제시") {
@@ -184,7 +245,8 @@ class PostServiceTest(
             Post(
                 title = "제목",
                 content = "내용",
-                createBy = "작성자"
+                createBy = "작성자",
+                tags = listOf("태그1", "태그2")
             )
         )
         `when`("정상 조회시") {
