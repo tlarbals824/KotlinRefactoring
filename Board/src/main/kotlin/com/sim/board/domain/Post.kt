@@ -6,7 +6,8 @@ import jakarta.persistence.*
 class Post(
     createBy: String,
     title: String,
-    content: String
+    content: String,
+    tags: List<String>
 ) : BaseEntity(createBy) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +22,20 @@ class Post(
     var comments: MutableList<Comment> = mutableListOf()
         private set
 
-    fun update(title: String, content: String, updatedBy: String) {
+    @OneToMany(mappedBy = "post", orphanRemoval = true, cascade = [CascadeType.ALL])
+    var tags: MutableList<Tag> = tags.map { Tag(it, this, createBy) }.toMutableList()
+        private set
+
+    fun update(title: String, content: String, updatedBy: String, tags: List<String>) {
         this.title = title
         this.content = content
         super.update(updatedBy)
+        updateTag(tags, updatedBy)
+    }
+
+    private fun updateTag(tags: List<String>, updatedBy: String) {
+        if(this.tags.map { it.name }.toSet() == tags.toSet()) return
+        this.tags.clear()
+        this.tags.addAll(tags.map { Tag(it, this, updatedBy) })
     }
 }
