@@ -30,7 +30,8 @@ class CommentServiceTest(
                 Post(
                     title = "제목",
                     content = "내용",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 )
             ).id
             val commentId = commentService.createComment(
@@ -69,7 +70,8 @@ class CommentServiceTest(
                 Post(
                     title = "제목",
                     content = "내용",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 )
             )
             val comment = commentRepository.save(
@@ -100,7 +102,8 @@ class CommentServiceTest(
                 Post(
                     title = "제목",
                     content = "내용",
-                    createBy = "작성자"
+                    createBy = "작성자",
+                    tags = listOf("태그1", "태그2")
                 )
             )
             val commentId = commentRepository.save(
@@ -129,7 +132,8 @@ class CommentServiceTest(
             Post(
                 title = "제목",
                 content = "내용",
-                createBy = "작성자"
+                createBy = "작성자",
+                tags = listOf("태그1", "태그2")
             )
         )
         val comment1 = commentRepository.save(
