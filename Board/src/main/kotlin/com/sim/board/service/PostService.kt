@@ -5,6 +5,7 @@ import com.sim.board.exception.PostNotDeletableException
 import com.sim.board.exception.PostNotFoundException
 import com.sim.board.exception.PostNotUpdatableException
 import com.sim.board.repository.PostRepository
+import com.sim.board.repository.TagRepository
 import com.sim.board.service.dto.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -16,7 +17,8 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class PostService(
     private val postRepository: PostRepository,
-    private val likeService: LikeService
+    private val likeService: LikeService,
+    private val tagRepository: TagRepository
 ) {
     @Transactional
     fun createPost(requestDto: PostCreateRequestDto): Long {
@@ -50,6 +52,9 @@ class PostService(
     }
 
     fun findPageBy(pageRequest: Pageable, postSearchRequestDto: PostSearchRequestDto): Page<PostSummaryResponseDto> {
+        postSearchRequestDto.tag?.let {
+            return tagRepository.findPageBy(pageRequest,it).toSummaryResponse(likeService::countLike)
+        }
         return postRepository.findPageBy(pageRequest, postSearchRequestDto).toSummaryResponseDto(likeService::countLike)
     }
 }

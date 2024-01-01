@@ -3,12 +3,13 @@ package com.sim.board.controller.dto
 import com.sim.board.service.dto.PostSummaryResponseDto
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
+import java.time.LocalDateTime
 
 data class PostSummaryResponse(
     val id: Long,
     val title: String,
     val createdBy: String,
-    val createdAt: String,
+    val createdAt: LocalDateTime,
     val tag : String?,
     val likeCount : Long = 0
 )
