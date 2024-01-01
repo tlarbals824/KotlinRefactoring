@@ -20,7 +20,8 @@ class CustomPostRepositoryImpl : CustomPostRepository, QuerydslRepositorySupport
         val result = from(QPost.post)
             .where(
                 postSearchRequestDto.title?.let { QPost.post.title.contains(it) },
-                postSearchRequestDto.createdBy?.let { QPost.post.createdBy.eq(it) }
+                postSearchRequestDto.createdBy?.let { QPost.post.createdBy.eq(it) },
+                postSearchRequestDto.tag?.let { QPost.post.tags.any().name.eq(it) }
             )
             .orderBy(QPost.post.createdAt.desc())
             .offset(pageRequest.offset)

@@ -21,6 +21,7 @@ fun PostDetailResponseDto.toResponse(): PostDetailResponse {
         content = this.content,
         createdBy = this.createdBy,
         createdAt = this.createdAt,
-        comments = this.comments.toResponse()
+        comments = this.comments.toResponse(),
+        tags = this.tags
     )
 }

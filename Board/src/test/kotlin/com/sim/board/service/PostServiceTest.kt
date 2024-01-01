@@ -76,19 +76,19 @@ class PostServiceTest(
                     title = "제목8",
                     content = "내용8",
                     createBy = "작성자",
-                    tags = listOf("태그1", "태그2")
+                    tags = listOf("태그1", "태그3")
                 ),
                 Post(
                     title = "제목9",
                     content = "내용9",
                     createBy = "작성자",
-                    tags = listOf("태그1", "태그2")
+                    tags = listOf("태그1", "태그3")
                 ),
                 Post(
                     title = "제목10",
                     content = "내용10",
                     createBy = "작성자",
-                    tags = listOf("태그1", "태그2")
+                    tags = listOf("태그1", "태그3")
                 )
             )
         )
@@ -258,6 +258,11 @@ class PostServiceTest(
                 post.createdBy shouldBe saved.createdBy
                 post.createdAt shouldBe saved.createdAt
             }
+            then("태그가 정상적으로 조회됨을 확인한다."){
+                post.tags.size shouldBe 2
+                post.tags[0] shouldBe "태그1"
+                post.tags[1] shouldBe "태그2"
+            }
         }
         `when`("게시글이 없을 때") {
             then("게시글을 찾을 수 없습니다 예외가 발생한다.") {
@@ -318,6 +323,20 @@ class PostServiceTest(
                 postPage.number shouldBe 0
                 postPage.size shouldBe 5
                 postPage.content.size shouldBe 5
+            }
+            then("첫번쨰 태그가 조회됨을 확인한다."){
+                val postPage = postSerive.findPageBy(PageRequest.of(0, 5), PostSearchRequestDto(createdBy = "작성자"))
+                postPage.content.forEach {
+                    it.tag shouldBe "태그1"
+                }
+            }
+        }
+        `when`("태그로 검색"){
+            then("태그에 해당하는 게시글이 반환된다."){
+                val postPage = postSerive.findPageBy(PageRequest.of(0, 5), PostSearchRequestDto(tag = "태그3"))
+                postPage.number shouldBe 0
+                postPage.size shouldBe 5
+                postPage.content.size shouldBe 3
             }
         }
     }

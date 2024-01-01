@@ -22,6 +22,6 @@ fun PostSummaryResponseDto.toResponse(): PostSummaryResponse {
         title = this.title,
         createdBy = this.createdBy,
         createdAt = this.createdAt,
-        tag = null
+        tag = this.tag
     )
 }

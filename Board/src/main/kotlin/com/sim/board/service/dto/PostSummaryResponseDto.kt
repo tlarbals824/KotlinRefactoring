@@ -8,7 +8,8 @@ data class PostSummaryResponseDto(
     val id: Long,
     val title: String,
     val createdBy: String,
-    val createdAt: String
+    val createdAt: String,
+    val tag : String,
 )
 
 fun Post.toSummaryResponseDto(): PostSummaryResponseDto {
@@ -16,7 +17,8 @@ fun Post.toSummaryResponseDto(): PostSummaryResponseDto {
         id = this.id,
         title = this.title,
         createdBy = this.createdBy,
-        createdAt = this.createdAt.toString()
+        createdAt = this.createdAt.toString(),
+        tag = this.tags[0].name
     )
 }
 
