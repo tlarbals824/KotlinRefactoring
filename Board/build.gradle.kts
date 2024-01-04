@@ -6,4 +6,9 @@ dependencies {
 
     // swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
+
+    // Redis
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    testImplementation("io.kotest.extensions:kotest-extensions-testcontainers:2.0.2")
 }

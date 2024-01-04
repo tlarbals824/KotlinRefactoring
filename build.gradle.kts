@@ -39,15 +39,15 @@ allprojects {
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
-        // web
-        implementation("org.springframework.boot:spring-boot-starter-web")
+//        // web
+//        implementation("org.springframework.boot:spring-boot-starter-web")
 
         // lombok
         implementation("org.projectlombok:lombok")
         annotationProcessor("org.projectlombok:lombok")
 
         // jpa
-        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+//        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
         // h2
         testImplementation("com.h2database:h2")
 
@@ -62,6 +62,9 @@ allprojects {
         // querydsl
         implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
         kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+
+
+        implementation("io.github.microutils:kotlin-logging:3.0.5")
     }
 
     tasks.withType<KotlinCompile> {
